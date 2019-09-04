@@ -1,4 +1,4 @@
-#FIFA in Go
+# FIFA in Go
 
 Go package that supports working with FIFA projects written in Go. Features include:
  * New player generation
