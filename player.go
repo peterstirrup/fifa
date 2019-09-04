@@ -57,7 +57,7 @@ type Player struct {
 	Reactions    float64 `json:"reactions"`
 	Balance      float64 `json:"balance"`
 	// Mentality
-	Aggression    float64 `json:"aggresion"`
+	Aggression    float64 `json:"aggression"`
 	Interceptions float64 `json:"interceptions"`
 	AttPosition   float64 `json:"att_position"`
 	Vision        float64 `json:"vision"`
