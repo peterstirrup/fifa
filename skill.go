@@ -1,4 +1,4 @@
-package player
+package fifa
 
 var (
 	// probSkillAbility is a map of positions to a map of skill ability (stars) to the probability that a player

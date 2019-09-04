@@ -1,4 +1,4 @@
-package player
+package fifa
 
 // positions are the positions a player can take in a human readable string.
 var positions = map[int]string{

@@ -1,4 +1,4 @@
-package player
+package fifa
 
 var playerTemplate = map[int]Player{
 	Goalkeeper: {

@@ -1,4 +1,4 @@
-package player
+package fifa
 
 import (
 	"database/sql"
