@@ -8,16 +8,15 @@ import (
 var (
 	// repeatRand is the number of times we roll the dice in our biased random num gen.
 	// Higher the number, the greater the bias to 0.
-	repeatRand,
-	// MinDiff and maxDiff are the minimum and maximum values we can stray from default stat values.
-	MinDiff,
-	maxDiff int
+	repeatRand = 3
+	// maxDiff is the maximum value we can stray from default stat values.
+	maxDiff = 20
 	// qualityCo is the quality bias between 0 and 1.
 	// The higher the number, the lower the general player quality.
-	qualityCo float64
+	qualityCo = 0.99
 	Players   []Player
 	// probOppositeFoot is the chance that a left mid has a strong right foot and vice versa
-	probOppositeFoot float64
+	probOppositeFoot = 0.2
 )
 
 const (
@@ -35,7 +34,6 @@ const (
 )
 
 // GenPlayer generates a player of a random position, with stats, nationality and name populated.
-// Check if name generator has been initialised - if not, initialise it.
 func GenPlayer() Player {
 	p := Player{
 		Position: rand.Intn(Striker) + 1,
@@ -44,19 +42,20 @@ func GenPlayer() Player {
 	p.genStats()
 	p.genNationality()
 	p.genName()
+	p.Format()
 
 	return p
 }
 
-// GenPlayerBase generates n players, returning a slice of Players and any errors.
-func GenPlayerBase(n int) ([]Player, error) {
+// GenPlayers generates n players, returning a slice of newly generated Players.
+func GenPlayers(n int) ([]Player) {
 	var players []Player
 
 	for i := 0; i < n; i++ {
 		players = append(players, GenPlayer())
 	}
 
-	return players, nil
+	return players
 }
 
 // genStats generates the players full stat profile. Stats are based on the temp player for their
