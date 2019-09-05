@@ -16,6 +16,7 @@ jobs:
     steps:
       - checkout
       - run: go get -u golang.org/x/lint/golint
+      - run: go get github.com/stretchr/testify/require
       - run: golint $(go list ./... | grep -v /vendor/)
       - run: go vet $(go list ./... | grep -v /vendor/)
 
