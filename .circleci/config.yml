@@ -1,13 +1,20 @@
 # Golang CircleCI 2.0 config file
 version: 2
 jobs:
-  verify:
+  build:
     docker:
       - image: circleci/golang:1.11
     working_directory: /go/src/github.com/peterstirrup/fifa
     steps:
       - checkout
       - run: go get github.com/stretchr/testify/require
+
+  verify:
+    docker:
+      - image: circleci/golang:1.11
+    working_directory: /go/src/github.com/peterstirrup/fifa
+    steps:
+      - checkout
       - run: go get -u golang.org/x/lint/golint
       - run: golint $(go list ./... | grep -v /vendor/)
       - run: go vet $(go list ./... | grep -v /vendor/)
@@ -25,7 +32,10 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - verify
+      - build
+      - verify:
+          requires:
+            - build
       - test:
           requires:
             - verify
