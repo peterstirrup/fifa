@@ -3,28 +3,28 @@ version: 2
 jobs:
   build:
     docker:
-    - image: circleci/golang:1.11
+      - image: circleci/golang:1.11
     working_directory: /go/src/github.com/peterstirrup/fifa
     steps:
-    - checkout
+      - checkout
 
   verify:
     docker:
-    - image: circleci/golang:1.11
+      - image: circleci/golang:1.11
     working_directory: /go/src/github.com/peterstirrup/fifa
     steps:
-    - checkout
-    - run: go get -u golang.org/x/lint/golint
-    - run: golint $(go list ./... | grep -v /vendor/)
-    - run: go vet $(go list ./... | grep -v /vendor/)
+      - checkout
+      - run: go get -u golang.org/x/lint/golint
+      - run: golint $(go list ./... | grep -v /vendor/)
+      - run: go vet $(go list ./... | grep -v /vendor/)
 
   test:
     docker:
-    - image: circleci/golang:1.11
+      - image: circleci/golang:1.11
     working_directory: /go/src/github.com/peterstirrup/fifa
     steps:
-    - checkout
-    - run: go test -v ./...
+      - checkout
+      - run: go test -v ./...
 
 # define order of job execution
 workflows:
