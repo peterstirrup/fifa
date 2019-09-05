@@ -2,9 +2,9 @@ package fifa
 
 import "math/rand"
 
+// Country IDs
 const (
-	_ = iota
-	Argentina
+	Argentina = iota + 1
 	Belgium
 	Brazil
 	England
@@ -16,96 +16,98 @@ const (
 	Spain
 )
 
-type Country struct {
-	// string is the countries name ("argentina")
+// country holds the names associated with a particular country, the string of the countries name (as an embedded type)
+// and probabilities of types of name (i.e. double barrel, middle names etc).
+type country struct {
+	// string is the countries name ("Argentina")
 	string
-	// FirstNames is that countries first names
-	FirstNames []string
-	// SecondNames is that countries second names
-	SecondNames []string
-	// NormalName is the probability of a normal name from that country (first and second name).
-	NormalName float64
-	// DoubleBarrel is the probability of a name from that country
+	// firstNames is that countries first names
+	firstNames []string
+	// secondNames is that countries second names
+	secondNames []string
+	// normalName is the probability of a normal name from that country (first and second name).
+	normalName float64
+	// doubleBarrel is the probability of a name from that country
 	// being double barrelled (0 <= n < 1)
-	DoubleBarrel float64
-	// MiddleName is the probability of a name from that country
+	doubleBarrel float64
+	// middleName is the probability of a name from that country
 	// having a middle name (0 <= n < 1)
-	MiddleName float64
-	// OneName is the probability of a name from that country
+	middleName float64
+	// oneName is the probability of a name from that country
 	// having only one word (like Ronaldinho) (0 <= n < 1)
-	OneName float64
+	oneName float64
 }
 
-var Countries = map[int]Country{
+var countries = map[int]country{
 	Argentina: {
 		string:       "Argentina",
-		NormalName:   0.65,
-		DoubleBarrel: 0,
-		MiddleName:   0.3,
-		OneName:      0.05,
+		normalName:   0.65,
+		doubleBarrel: 0,
+		middleName:   0.3,
+		oneName:      0.05,
 	},
 	Belgium: {
 		string:       "Belgium",
-		NormalName:   0.85,
-		DoubleBarrel: 0.05,
-		MiddleName:   0.1,
-		OneName:      0,
+		normalName:   0.85,
+		doubleBarrel: 0.05,
+		middleName:   0.1,
+		oneName:      0,
 	},
 	Brazil: {
 		string:       "Brazil",
-		NormalName:   0.6,
-		DoubleBarrel: 0,
-		MiddleName:   0.2,
-		OneName:      0.2,
+		normalName:   0.6,
+		doubleBarrel: 0,
+		middleName:   0.2,
+		oneName:      0.2,
 	},
 	England: {
 		string:       "England",
-		NormalName:   0.9,
-		DoubleBarrel: 0.05,
-		MiddleName:   0.05,
-		OneName:      0,
+		normalName:   0.9,
+		doubleBarrel: 0.05,
+		middleName:   0.05,
+		oneName:      0,
 	},
 	France: {
 		string:       "France",
-		NormalName:   0.9,
-		DoubleBarrel: 0.05,
-		MiddleName:   0.05,
-		OneName:      0,
+		normalName:   0.9,
+		doubleBarrel: 0.05,
+		middleName:   0.05,
+		oneName:      0,
 	},
 	Germany: {
 		string:       "Germany",
-		NormalName:   0.7,
-		DoubleBarrel: 0.1,
-		MiddleName:   0.2,
-		OneName:      0,
+		normalName:   0.7,
+		doubleBarrel: 0.1,
+		middleName:   0.2,
+		oneName:      0,
 	},
 	Italy: {
 		string:       "Italy",
-		NormalName:   0.55,
-		DoubleBarrel: 0.2,
-		MiddleName:   0.2,
-		OneName:      0.05,
+		normalName:   0.55,
+		doubleBarrel: 0.2,
+		middleName:   0.2,
+		oneName:      0.05,
 	},
 	Netherlands: {
 		string:       "Netherlands",
-		NormalName:   0.45,
-		DoubleBarrel: 0.2,
-		MiddleName:   0.3,
-		OneName:      0.05,
+		normalName:   0.45,
+		doubleBarrel: 0.2,
+		middleName:   0.3,
+		oneName:      0.05,
 	},
 	Portugal: {
 		string:       "Portugal",
-		NormalName:   0.75,
-		DoubleBarrel: 0.05,
-		MiddleName:   0.1,
-		OneName:      0.1,
+		normalName:   0.75,
+		doubleBarrel: 0.05,
+		middleName:   0.1,
+		oneName:      0.1,
 	},
 	Spain: {
 		string:       "Spain",
-		NormalName:   0.65,
-		DoubleBarrel: 0.1,
-		MiddleName:   0.2,
-		OneName:      0.05,
+		normalName:   0.65,
+		doubleBarrel: 0.1,
+		middleName:   0.2,
+		oneName:      0.05,
 	},
 }
 
@@ -145,7 +147,7 @@ func (p *Player) GetNationalityCode() string {
 	return "NaN"
 }
 
-// GetNationalityStrings returns the users nationality as a string. Nationality is generated as an ID - this function
+// GetNationalityStr returns the users nationality as a string. Nationality is generated as an ID - this function
 // provides the nationality as a human readable string.
 // e.g. 0 --> "Argentina"
 func (p *Player) GetNationalityStr() string {

@@ -2,10 +2,9 @@ package fifa
 
 import "math/rand"
 
-
+// Strong foot IDs
 const (
-	_ = iota
-	LeftFoot
+	LeftFoot = iota + 1
 	RightFoot
 )
 

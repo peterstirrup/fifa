@@ -14,14 +14,13 @@ var (
 	// qualityCo is the quality bias between 0 and 1.
 	// The higher the number, the lower the general player quality.
 	qualityCo = 0.99
-	Players   []Player
 	// probOppositeFoot is the chance that a left mid has a strong right foot and vice versa
 	probOppositeFoot = 0.2
 )
 
+// Positions
 const (
-	_ = iota
-	Goalkeeper
+	Goalkeeper = iota + 1
 	CentreBack
 	LeftBack
 	RightBack

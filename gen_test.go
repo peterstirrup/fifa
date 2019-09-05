@@ -65,10 +65,7 @@ func TestPlayer_GenPlayerBase(t *testing.T) {
 
 	for _, tt := range table {
 		t.Run(fmt.Sprintf("generate %d players", tt.n), func(st *testing.T) {
-			players, err := GenPlayers(tt.n)
-			if err != nil {
-				st.Fatal(err)
-			}
+			players := GenPlayers(tt.n)
 
 			r := require.New(st)
 			r.Equal(len(players), tt.exp)

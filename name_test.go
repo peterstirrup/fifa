@@ -9,19 +9,19 @@ import (
 func TestPlayer_genName(t *testing.T) {
 	table := []struct {
 		countryID int
-		c         Country
+		c         country
 		expFirst  string
 		expSecond string
 	}{
-		{100, Country{NormalName: 1, FirstNames: []string{"John"}, SecondNames: []string{"Doe"}}, "John", "Doe"},
-		{101, Country{DoubleBarrel: 1, FirstNames: []string{"John"}, SecondNames: []string{"Doe"}}, "John", "Doe-Doe"},
-		{102, Country{MiddleName: 1, FirstNames: []string{"John"}, SecondNames: []string{"Doe"}}, "John John", "Doe"},
-		{103, Country{OneName: 1, FirstNames: []string{"John"}, SecondNames: []string{"Doe"}}, "", "John"},
+		{100, country{normalName: 1, firstNames: []string{"John"}, secondNames: []string{"Doe"}}, "John", "Doe"},
+		{101, country{doubleBarrel: 1, firstNames: []string{"John"}, secondNames: []string{"Doe"}}, "John", "Doe-Doe"},
+		{102, country{middleName: 1, firstNames: []string{"John"}, secondNames: []string{"Doe"}}, "John John", "Doe"},
+		{103, country{oneName: 1, firstNames: []string{"John"}, secondNames: []string{"Doe"}}, "", "John"},
 	}
 
 	for _, tt := range table {
 		t.Run(fmt.Sprintf("%+v", tt.c), func(st *testing.T) {
-			Countries[tt.countryID] = tt.c
+			countries[tt.countryID] = tt.c
 			p := Player{
 				Nationality: tt.countryID,
 			}
@@ -32,7 +32,7 @@ func TestPlayer_genName(t *testing.T) {
 			r.Equal(tt.expSecond, p.SecondName)
 
 			// clean up
-			Countries[tt.countryID] = Country{}
+			countries[tt.countryID] = country{}
 		})
 	}
 }
