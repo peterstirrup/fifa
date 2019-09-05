@@ -8,33 +8,30 @@ jobs:
     steps:
       - checkout
 
-    verify:
-      docker:
-        - image: circleci/golang:1.11
-      working_directory: /go/src/github.com/peterstirrup/fifa
-      steps:
-        - checkout
-        - run: go get -u golang.org/x/lint/golint
-        - run: golint $(go list ./... | grep -v /vendor/)
-        - run: go vet $(go list ./... | grep -v /vendor/)
+  verify:
+    docker:
+      - image: circleci/golang:1.11
+    working_directory: /go/src/github.com/peterstirrup/fifa
+    steps:
+      - checkout
+      - run: go get -u golang.org/x/lint/golint
+      - run: golint $(go list ./... | grep -v /vendor/)
+      - run: go vet $(go list ./... | grep -v /vendor/)
 
-    test:
-      docker:
-        - image: circleci/golang:1.11
-      working_directory: /go/src/github.com/peterstirrup/fifa
-      steps:
-        - checkout
-        - run: go test -v ./...
+  test:
+    docker:
+      - image: circleci/golang:1.11
+    working_directory: /go/src/github.com/peterstirrup/fifa
+    steps:
+      - checkout
+      - run: go test -v ./...
 
 # define order of job execution
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
-      - verify:
-        - requires:
-          - build
+      - verify
       - test:
           requires:
             - verify
