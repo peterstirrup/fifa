@@ -17,6 +17,7 @@ jobs:
     working_directory: /go/src/github.com/peterstirrup/fifa
     steps:
       - checkout
+      - run: go get github.com/stretchr/testify
       - run: go test -v ./...
 
 # define order of job execution
