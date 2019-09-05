@@ -1,14 +1,6 @@
 # Golang CircleCI 2.0 config file
 version: 2
 jobs:
-  build:
-    docker:
-      - image: circleci/golang:1.11
-    working_directory: /go/src/github.com/peterstirrup/fifa
-    steps:
-      - checkout
-      - run: go get github.com/stretchr/testify/require
-
   verify:
     docker:
       - image: circleci/golang:1.11
@@ -26,6 +18,7 @@ jobs:
     working_directory: /go/src/github.com/peterstirrup/fifa
     steps:
       - checkout
+      - run: go get github.com/stretchr/testify/require
       - run: go test -v ./...
 
 # define order of job execution
@@ -33,10 +26,7 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
-      - verify:
-          requires:
-            - build
+      - verify
       - test:
           requires:
             - verify
