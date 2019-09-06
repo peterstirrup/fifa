@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"math/rand"
-	"path/filepath"
 	"strings"
 )
 
@@ -21,18 +20,12 @@ const (
 // that country's name string slices. After this process, the name generator is ready to start.
 func init() {
 	for i, v := range countries {
-		path, err := filepath.Abs("./name/")
-		if err != nil {
-			log.Fatal(err)
-		}
-		path += "/" + countries[i].string
-
-		first, err := ioutil.ReadFile(path + "/first_names.txt")
+		first, err := ioutil.ReadFile("name/" + countries[i].string + "/first_names.txt")
 		if err != nil {
 			log.Fatal(fmt.Errorf("name gen: cannot read first names file for country %s with error %s", countries[i].string, err.Error()))
 		}
 
-		second, err := ioutil.ReadFile(path + countries[i].string + "/second_names.txt")
+		second, err := ioutil.ReadFile("name/" + countries[i].string + "/second_names.txt")
 		if err != nil {
 			log.Fatal(fmt.Errorf("name gen: cannot read second names file for country %s with error %s", countries[i].string, err.Error()))
 		}
