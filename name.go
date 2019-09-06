@@ -2,10 +2,11 @@ package fifa
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"math/rand"
 	"strings"
+
+	"github.com/gobuffalo/packr"
 )
 
 const (
@@ -18,20 +19,20 @@ const (
 // init reads the first name and second name files for each country (found in name) and populates
 // that country's name string slices. After this process, the name generator is ready to start.
 func init() {
+	box := packr.NewBox("name")
 	for i, v := range countries {
-		log.Println(v.string)
-		first, err := ioutil.ReadFile("name/" + countries[i].string + "/first_names.txt")
+		first, err := box.FindString(countries[i].string + "/first_names.txt")
 		if err != nil {
 			log.Fatal(fmt.Errorf("name gen: cannot read first names file for country %s with error: %s", countries[i].string, err.Error()))
 		}
 
-		second, err := ioutil.ReadFile("name/" + countries[i].string + "/second_names.txt")
+		second, err :=  box.FindString(countries[i].string + "/second_names.txt")
 		if err != nil {
 			log.Fatal(fmt.Errorf("name gen: cannot read second names file for country %s with error: %s", countries[i].string, err.Error()))
 		}
 
-		v.firstNames = strings.Split(string(first), "\n")
-		v.secondNames = strings.Split(string(second), "\n")
+		v.firstNames = strings.Split(first, "\n")
+		v.secondNames = strings.Split(second, "\n")
 		countries[i] = v
 	}
 }
