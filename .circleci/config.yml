@@ -9,6 +9,7 @@ jobs:
       - checkout
       - run: go get -u golang.org/x/lint/golint
       - run: go get github.com/stretchr/testify/require
+      - run: go get github.com/gobuffalo/packr
       - run: golint $(go list ./... | grep -v /vendor/)
       - run: go vet $(go list ./... | grep -v /vendor/)
 
@@ -19,6 +20,7 @@ jobs:
     steps:
       - checkout
       - run: go get github.com/stretchr/testify/require
+      - run: go get github.com/gobuffalo/packr
       - run: go test -v ./...
 
 # define order of job execution
