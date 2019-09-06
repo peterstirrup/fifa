@@ -9,8 +9,7 @@ import (
 )
 
 const (
-	_ = iota
-	normalName
+	normalName = iota + 1
 	doubleBarrelName
 	middleName
 	oneName
@@ -22,12 +21,12 @@ func init() {
 	for i, v := range countries {
 		first, err := ioutil.ReadFile("name/" + countries[i].string + "/first_names.txt")
 		if err != nil {
-			log.Fatal(fmt.Errorf("name gen: cannot read first names file for country %s with error %s", countries[i].string, err.Error()))
+			log.Fatal(fmt.Errorf("name gen: cannot read first names file for country %s with error: %s", countries[i].string, err.Error()))
 		}
 
 		second, err := ioutil.ReadFile("name/" + countries[i].string + "/second_names.txt")
 		if err != nil {
-			log.Fatal(fmt.Errorf("name gen: cannot read second names file for country %s with error %s", countries[i].string, err.Error()))
+			log.Fatal(fmt.Errorf("name gen: cannot read second names file for country %s with error: %s", countries[i].string, err.Error()))
 		}
 
 		v.firstNames = strings.Split(string(first), "\n")
