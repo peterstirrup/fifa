@@ -25,7 +25,7 @@ func init() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		path += countries[i].string
+		path += "/" + countries[i].string
 
 		first, err := ioutil.ReadFile(path + "/first_names.txt")
 		if err != nil {
