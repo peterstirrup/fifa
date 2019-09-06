@@ -19,6 +19,7 @@ const (
 // that country's name string slices. After this process, the name generator is ready to start.
 func init() {
 	for i, v := range countries {
+		log.Println(v.string)
 		first, err := ioutil.ReadFile("name/" + countries[i].string + "/first_names.txt")
 		if err != nil {
 			log.Fatal(fmt.Errorf("name gen: cannot read first names file for country %s with error: %s", countries[i].string, err.Error()))
