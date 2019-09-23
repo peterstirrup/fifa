@@ -29,7 +29,7 @@ func TestPlayer_genStats(t *testing.T) {
 	p := Player{
 		Position: Striker,
 	}
-	p.genStats()
+	p.genStats(defaultQuality)
 
 	table := []struct {
 		attr string

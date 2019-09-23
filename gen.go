@@ -11,9 +11,8 @@ var (
 	repeatRand = 3
 	// maxDiff is the maximum value we can stray from default stat values.
 	maxDiff = 20
-	// qualityCo is the quality bias between 0 and 1.
-	// The higher the number, the lower the general player quality.
-	qualityCo = 0.99
+	// defaultQuality is the default value used in GenPlayer to call GenPlayerWithQuality.
+	defaultQuality = 0.1
 	// probOppositeFoot is the chance that a left mid has a strong right foot and vice versa
 	probOppositeFoot = 0.2
 )
@@ -32,13 +31,19 @@ const (
 	Striker
 )
 
-// GenPlayer generates a player of a random position, with stats, nationality and name populated.
+// GenPlayer is a simplified version of GenPlayerWithQuality, where the caller doesn't care about a players quality.
 func GenPlayer() Player {
+	return GenPlayerWithQuality(defaultQuality)
+}
+
+// GenPlayerWithQuality generates a player of a random position, with stats, nationality and name populated.
+// quality (0 < n <= 1) is the probability of a higher rated player will be generated.
+func GenPlayerWithQuality(quality float64) Player {
 	p := Player{
 		Position: rand.Intn(Striker) + 1,
 	}
 
-	p.genStats()
+	p.genStats(quality)
 	p.genNationality()
 	p.genName()
 	p.Format()
@@ -46,12 +51,17 @@ func GenPlayer() Player {
 	return p
 }
 
-// GenPlayers generates n players, returning a slice of newly generated Players.
-func GenPlayers(n int) ([]Player) {
+// GenPlayers generates n players of default quality, returning a slice of newly generated Players.
+func GenPlayers(n int) []Player {
+	return GenPlayersWithQuality(n, defaultQuality)
+}
+
+// GenPlayersWithQuality generates n players, returning a slice of newly generated Players.
+func GenPlayersWithQuality(n int, quality float64) []Player {
 	var players []Player
 
 	for i := 0; i < n; i++ {
-		players = append(players, GenPlayer())
+		players = append(players, GenPlayerWithQuality(quality))
 	}
 
 	return players
@@ -65,9 +75,9 @@ func GenPlayers(n int) ([]Player) {
 //
 // Some stats are generated based off others - by this, we mean they are linked. Ball control and dribbling are linked, for example.
 // So, unless it's a fluke, a player with good ball control will be good at dribbling.
-func (p *Player) genStats() {
+func (p *Player) genStats(quality float64) {
 	*p = playerTemplate[p.Position]
-	if rand.Float64() > qualityCo {
+	if rand.Float64() > quality {
 		p.TalentCo = capNum(rand.Float64()+rand.Float64(), 0, 1)
 	} else {
 		p.TalentCo = capNum((rand.Float64())-rand.Float64(), 0, 1)
@@ -146,11 +156,6 @@ func SetRepeatRand(rr int) {
 // SetMaxDiff sets the maxDiff var to the passed in value.
 func SetMaxDiff(md int) {
 	maxDiff = md
-}
-
-// SetQualityCo sets the qualityCo var to the passed in value.
-func SetQualityCo(qco float64) {
-	qualityCo = qco
 }
 
 // SetProbOppositeFoot sets the probOppositeFoot var to the passed in value.
