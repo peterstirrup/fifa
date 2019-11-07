@@ -17,7 +17,7 @@ const (
 )
 
 // country holds the names associated with a particular country, the string of the countries name (as an embedded type)
-// and probabilities of types of name (i.e. double barrel, middle names etc).
+// and probabilities of types of name (double barrel, middle names etc).
 type country struct {
 	// string is the countries name ("Argentina")
 	string
