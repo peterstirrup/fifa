@@ -22,13 +22,6 @@ In the words of Commodores, that's why I'm easy.
 p := fifa.GenPlayer()
 ```
 
-### Generating a player
-In the words of Commodores, that's why I'm easy.
-
-```
-p := fifa.GenPlayer()
-```
-
 ### Generating n players
 Again - soooooo easy!
 
